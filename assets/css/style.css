@@ -1,0 +1,30 @@
+*{
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1em;
+}
+.container{
+    background-image: url(../images/background.png);
+    background-size:cover;
+}
+.counter{
+    display: inline;
+}
+.text-center{
+    background-color: transparent;
+}
+.ninja{
+    width:100px;
+}
+.location img{
+    width: 100px;
+    height: 100px;
+}
+.location button{
+    border: 20px;
+    background-color: transparent;
+}
+button{
+    border: 0;
+}
