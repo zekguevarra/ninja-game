@@ -1,3 +1,21 @@
+window.addEventListener('DOMContentLoaded', event => {
+
+    // Collapse responsive navbar when toggler is visible
+    const navbarToggler = document.body.querySelector('.navbar-toggler');
+    const responsiveNavItems = [].slice.call(
+        document.querySelectorAll('#navbarResponsive .nav-link')
+    );
+    responsiveNavItems.map(function (responsiveNavItem) {
+        responsiveNavItem.addEventListener('click', () => {
+            if (window.getComputedStyle(navbarToggler).display !== 'none') {
+                navbarToggler.click();
+            }
+        });
+    });
+
+});
+
+//game
 let randomizer=0;
 let randomGold=0;
 $("#cave").click(cave); // $("dito lagay yung name. # for id tas id name").[operation](tas function)
@@ -11,23 +29,16 @@ var game={
     log:[],
 }
 
-function gold(){
-    if(game.gold>0){
-        $("#gold").css("color","yellow");
-    }else{
-        $("#gold").css("color","red");
-    }
-}
 function cave(){
     game.turn++;
     $("#turn").html(game.turn);
     game.gold+=5;
     $("#gold").html(game.gold);
     game.log.push("win 5");
-    console.log(game.log);
-    ninja();
-    gold();
+    $("#last").html("Win 5 🧈");
+    ninjaCave();
     stop();
+    gold();
 }
 
 function house(){
@@ -37,13 +48,14 @@ function house(){
     console.log(randomizer);
     if(randomizer< 81 ){
         game.gold+=10;
-        $("#last").html("win 10");
+        $("#last").html("Win 10 🧈");
         $("#gold").html(game.gold);
     }else{
         $("#last").html("No Gain");
     }
-    gold();
+    ninjaHouse();
     stop();
+    gold();
 }
 
 function goldmine(){
@@ -55,48 +67,81 @@ function goldmine(){
         randomGold=Math.floor(Math.random()*26)
         console.log(randomGold);
         game.gold+=randomGold;
-        $("#last").html("win" + randomGold);
+        $("#last").html("Win " + randomGold + " 🧈");
         $("#gold").html(game.gold);
     }else{
-        $("#last").html("Lose" + randomGold);
+        $("#last").html("No Gain");
     }
-    gold();
+    ninjaGoldmine();
     stop();
+    gold();
 }
 
 function casino(){
     game.turn++;
     $("#turn").html(game.turn);
     randomizer=Math.floor(Math.random() * 101);
-    console.log(randomizer);
     randomGold=Math.floor(Math.random()*(51-40))+40;
-    console.log(randomGold);
     if(randomizer< 51 ){
         game.gold+=randomGold;
-        $("#last").html("win" + randomGold);
+        $("#last").html("Win " + randomGold + " 🧈");
         $("#gold").html(game.gold);
     }else{
         game.gold-=randomGold;
-        $("#last").html("Lose" + randomGold);
+        $("#last").html("Lose " + randomGold + " 🧈");
         $("#gold").html(game.gold);
     }
-    ninja();
-    gold();
+    ninjaCasino();
     stop();
+    gold();
 }
-
+function gold(){
+    if(game.gold>=0){
+        $("#gold").css("color","green");
+    }else{
+        $("#gold").css("color","red");
+    }
+}
 
 function stop(){
-    if (game.turn === 20){
+    if (game.turn >= 20){
         if(game.gold >= 250){
-            alert("win");
+            $("#exampleModal1").modal("show");
         }else{
-            alert("lose");
+            $("#exampleModal").modal("show");
         }
+            game.turn=0;
+            $("#turn").html(game.turn);
+            game.gold=0;
+            $("#gold").html(game.gold); 
+            $("#last").html(" ");     
     }
-    turn=0;
-    gold=0;
 }
- function ninja(){
-    $("#nin").animate({width:"toggle", left:'+=150px'});
+ function ninjaCasino(){
+    $("#ninja").animate({marginLeft: "-300px", marginTop: "150px"}, 500, function(){
+        // Reset the position of the image after the animation is complete
+        $(this).animate({marginLeft: "-50px", marginTop: "0px"},500);
+        // $(this).css({marginLeft: '-50px', marginTop: '0px'},1000);
+      });
+ }
+ function ninjaHouse(){
+    $("#ninja").animate({marginLeft: "200px", marginTop: "-150px"}, 500, function(){
+        // Reset the position of the image after the animation is complete
+        $(this).animate({marginLeft: "-50px", marginTop: "0px"},500);
+        // $(this).css({marginLeft: '-50px', marginTop: '0px'},1000);
+      });
+ }
+ function ninjaCave(){
+    $("#ninja").animate({marginLeft: "-300px", marginTop: "-150px"}, 500, function(){
+        // Reset the position of the image after the animation is complete
+        $(this).animate({marginLeft: "-50px", marginTop: "0px"},500);
+        // $(this).css({marginLeft: '-50px', marginTop: '0px'},1000);
+      });
+ }
+ function ninjaGoldmine(){
+    $("#ninja").animate({marginLeft: "220px", marginTop: "150px"}, 500, function(){
+        // Reset the position of the image after the animation is complete
+        $(this).animate({marginLeft: "-50px", marginTop: "0px"},500);
+        // $(this).css({marginLeft: '-50px', marginTop: '0px'},1000);
+      });
  }
